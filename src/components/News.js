@@ -11,15 +11,12 @@ const News = ({ apikey = "", pageSize = 15, country = "us", category = "general"
   const abortRef = useRef(null);
 
   const buildUrl = (p = page) => {
-    const base = "https://newsapi.org/v2/top-headlines";
     const params = new URLSearchParams({
       country,
       category,
-      pageSize: String(pageSize),
       page: String(p),
-      apiKey: apikey,
     });
-    return `${base}?${params.toString()}`;
+    return `/api/news?${params.toString()}`;
   };
 
   useEffect(() => {
@@ -32,11 +29,6 @@ const News = ({ apikey = "", pageSize = 15, country = "us", category = "general"
 
   useEffect(() => {
     // main fetch with AbortController and progress callbacks
-    if (!apikey) {
-      setError("API key not configured. Set REACT_APP_NEWS_API_KEY in .env.");
-      return;
-    }
-
     const controller = new AbortController();
     abortRef.current = controller;
 
