@@ -1,4 +1,7 @@
-# Getting Started with Create React App
+# NewsApp
+NewsApp is a responsive and feature-rich news aggregator application developed using React.js. The application aims to provide users with a seamless and engaging experience to browse the latest news articles from diverse categories such as Business, Entertainment, Health, Science, Sports, and Technology. 
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -68,4 +71,3 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-"# NewsApp" 
