@@ -1,7 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import Spinner from "./Spinner";
 
-const News = ({ apikey = "", pageSize = 15, country = "us", category = "general", setProgress = () => {} }) => {
+const News = ({
+  apikey = "",
+  pageSize = 15,
+  country = "us",
+  category = "general",
+  setProgress = () => {},
+}) => {
   const [articles, setArticles] = useState([]);
   const [page, setPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
@@ -16,6 +22,18 @@ const News = ({ apikey = "", pageSize = 15, country = "us", category = "general"
       page: String(p),
     });
     return `/api/news?${params.toString()}`;
+  };
+
+  // Utility function to format author names
+  const formatAuthors = (authorStr) => {
+    if (!authorStr) return "Unknown";
+    const names = authorStr
+      .split(",")
+      .map((n) => n.trim())
+      .filter(Boolean);
+    return names.length > 2
+      ? `${names.slice(0, 2).join(", ")}...`
+      : names.join(", ");
   };
 
   useEffect(() => {
@@ -38,7 +56,10 @@ const News = ({ apikey = "", pageSize = 15, country = "us", category = "general"
         const url = buildUrl(page);
 
         setProgress(30);
-        const res = await fetch(url, { signal: controller.signal, cache: "no-store" });
+        const res = await fetch(url, {
+          signal: controller.signal,
+          cache: "no-store",
+        });
         setProgress(60);
 
         if (!res.ok) {
@@ -53,7 +74,7 @@ const News = ({ apikey = "", pageSize = 15, country = "us", category = "general"
           throw new Error(data.message || "API returned an error");
         }
 
-        setArticles(prev => [...prev, ...(data.articles || [])]);
+        setArticles((prev) => [...prev, ...(data.articles || [])]);
         setTotalResults(data.totalResults || 0);
         setError(null);
       } catch (err) {
@@ -80,15 +101,13 @@ const News = ({ apikey = "", pageSize = 15, country = "us", category = "general"
 
   const handleLoadMore = () => {
     if (articles.length < totalResults && !loading) {
-      setPage(prev => prev + 1);
+      setPage((prev) => prev + 1);
     }
   };
 
   return (
     <div className="container my-4">
-      <h2 className="mb-3 text-capitalize">
-        Top {category} Headlines
-      </h2>
+      <h2 className="mb-3 text-capitalize">Top {category} Headlines</h2>
 
       {error && (
         <div className="alert alert-danger" role="alert">
@@ -101,19 +120,35 @@ const News = ({ apikey = "", pageSize = 15, country = "us", category = "general"
           <div className="col-md-4 mb-4" key={`${a.url || i}`}>
             <div className="card h-100 shadow-sm">
               {a.urlToImage ? (
-                <img src={a.urlToImage} className="card-img-top" alt={a.title || "news"} />
+                <img
+                  src={a.urlToImage}
+                  className="card-img-top"
+                  alt={a.title || "news"}
+                />
               ) : (
                 <div className="card-img-top placeholder-image" />
               )}
               <div className="card-body d-flex flex-column">
                 <h5 className="card-title">{a.title}</h5>
-                <p className="card-text text-muted small mb-2">{a.source?.name || "Unknown source"} • {new Date(a.publishedAt).toLocaleString()}</p>
-                <p className="card-text mb-3" style={{ flexGrow: 1 }}>{a.description || "Read more in the full article."}</p>
+                <p className="card-text text-muted small mb-2">
+                  {a.source?.name || "Unknown source"} •{" "}
+                  {new Date(a.publishedAt).toLocaleString()}
+                </p>
+                <p className="card-text mb-3" style={{ flexGrow: 1 }}>
+                  {a.description || "Read more in the full article."}
+                </p>
                 <div className="mt-auto">
-                  <a href={a.url} target="_blank" rel="noreferrer" className="btn btn-sm btn-primary">
+                  <a
+                    href={a.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn btn-sm btn-primary"
+                  >
                     Read
                   </a>
-                  <span className="badge bg-secondary ms-2">{a.author || "Unknown"}</span>
+                  <span className="badge bg-secondary ms-2">
+                    {formatAuthors(a.author)}
+                  </span>
                 </div>
               </div>
             </div>
@@ -129,14 +164,19 @@ const News = ({ apikey = "", pageSize = 15, country = "us", category = "general"
 
       {!loading && articles.length < totalResults && (
         <div className="d-flex justify-content-center">
-          <button className="btn btn-outline-primary mb-4" onClick={handleLoadMore}>
+          <button
+            className="btn btn-outline-primary mb-4"
+            onClick={handleLoadMore}
+          >
             Load more
           </button>
         </div>
       )}
 
       {!loading && articles.length === 0 && !error && (
-        <div className="text-center text-muted py-5">No articles available.</div>
+        <div className="text-center text-muted py-5">
+          No articles available.
+        </div>
       )}
     </div>
   );
