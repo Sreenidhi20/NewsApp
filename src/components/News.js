@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import NewsItem from "./NewsItem";
 import Spinner from "./Spinner";
 
 const News = ({ apikey = "", pageSize = 15, country = "us", category = "general", setProgress = () => {} }) => {
@@ -83,10 +82,6 @@ const News = ({ apikey = "", pageSize = 15, country = "us", category = "general"
     if (articles.length < totalResults && !loading) {
       setPage(prev => prev + 1);
     }
-  };
-
-  const capitalizeFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
   return (
