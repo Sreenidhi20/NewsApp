@@ -1,10 +1,11 @@
 import React from "react";
+import "./News.css";
 
 const NewsItem = (props) => {
   let { title, description, imageurl, newsurl, author, date, source } = props;
   return (
     <div className="my-3">
-      <div className="card">
+      <div className="card h-100 shadow-sm border-0 rounded-4">
         <div
           style={{
             display: "flex",
@@ -15,20 +16,22 @@ const NewsItem = (props) => {
         >
           <span className=" badge rounded-pill bg-danger">{source}</span>
         </div>
-        <img src={imageurl} className="card-img-top" alt="..." />
+        <img src={imageurl} className="card-img-top news-image" alt="..." />
         <div className="card-body">
-          <h5 className="card-title">{title}</h5>
-          <p className="card-text">{description}...</p>
+          <h5 className="card-title fw-bold">{a.title}</h5>
+          <p className="card-text text-secondary">
+            {a.description || "Read more in the full article."}
+          </p>
           <p className="card-text">
             <small className="text-body-secondary">
               By {author} on {new Date(date).toGMTString()}
             </small>
           </p>
           <a
-            href={newsurl}
+            href={a.url}
             target="_blank"
             rel="noreferrer"
-            className="btn btn-sm btn-dark"
+            className="btn btn-primary btn-sm"
           >
             Read More
           </a>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import Spinner from "./Spinner";
+import "./News.css";
 
 const News = ({
   apikey = "",
@@ -107,7 +108,9 @@ const News = ({
 
   return (
     <div className="container my-4">
-      <h2 className="mb-3 text-capitalize">Top {category} Headlines</h2>
+      <h2 className="text-center text-lg-start mb-4 text-capitalize fw-bold">
+        Top {category} Headlines
+      </h2>
 
       {error && (
         <div className="alert alert-danger" role="alert">
@@ -117,13 +120,16 @@ const News = ({
 
       <div className="row">
         {articles.map((a, i) => (
-          <div className="col-md-4 mb-4" key={`${a.url || i}`}>
+          <div
+            className="col-md-4 mb-4col-12 col-sm-6 col-lg-4 mb-4"
+            key={`${a.url || i}`}
+          >
             <div className="card h-100 shadow-sm">
               {a.urlToImage ? (
                 <img
                   src={a.urlToImage}
-                  className="card-img-top"
-                  alt={a.title || "news"}
+                  className="card-img-top news-image"
+                  alt={a.title}
                 />
               ) : (
                 <div className="card-img-top placeholder-image" />
@@ -137,7 +143,7 @@ const News = ({
                 <p className="card-text mb-3" style={{ flexGrow: 1 }}>
                   {a.description || "Read more in the full article."}
                 </p>
-                <div className="mt-auto">
+                <div className="mt-auto d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2">
                   <a
                     href={a.url}
                     target="_blank"
@@ -146,7 +152,7 @@ const News = ({
                   >
                     Read
                   </a>
-                  <span className="badge bg-secondary ms-2">
+                  <span className="badge bg-secondary text-wrap">
                     {formatAuthors(a.author)}
                   </span>
                 </div>

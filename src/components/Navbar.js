@@ -3,7 +3,8 @@ import { Link, NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const Navbar = ({ theme, onToggleTheme }) => {
-  const navClass = theme === "dark" ? "navbar-dark bg-dark" : "navbar-light bg-light";
+  const navClass =
+    theme === "dark" ? "navbar-dark bg-dark" : "navbar-light bg-light";
 
   return (
     <nav className={`navbar navbar-expand-lg ${navClass} shadow-sm`}>
@@ -24,7 +25,7 @@ const Navbar = ({ theme, onToggleTheme }) => {
         </button>
 
         <div className="collapse navbar-collapse" id="navMenu">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0 text-center">
             <li className="nav-item">
               <NavLink end className="nav-link" to="/">
                 General
@@ -67,17 +68,13 @@ const Navbar = ({ theme, onToggleTheme }) => {
             </li>
           </ul>
 
-          <div className="d-flex align-items-center">
+          <div className="d-flex align-items-center justify-content-center mt-3 mt-lg-0">
             <button
-              type="button"
-              className="btn btn-sm btn-outline-secondary me-2"
+              className="btn btn-sm btn-outline-secondary w-100 w-lg-auto"
               onClick={onToggleTheme}
-              aria-pressed={theme === "dark"}
-              title="Toggle dark / light theme"
             >
               {theme === "dark" ? "Light" : "Dark"} Mode
             </button>
-            {/* Placeholder for search or other controls */}
           </div>
         </div>
       </div>
